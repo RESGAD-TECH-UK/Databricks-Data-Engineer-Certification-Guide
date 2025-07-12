@@ -8,7 +8,7 @@
 * **Data Lake** stores data in its original format (raw, unstructured, semi-structured, or structured). It's optimized for **big data** and uses **ELT** (Extract, Load, Transform).
 * **Data Warehouse** stores **structured data** in a **schema-on-write** fashion, typically optimized for fast querying, reporting, and analytics.
 
-#### Lakehouse Benefits:
+**Lakehouse Benefits:**
 
 * Unified platform: avoids data silos between lake and warehouse.
 * Simplified architecture: supports both BI and ML workloads.
@@ -57,22 +57,17 @@
 
 ### **5. Medallion Architecture in Lakehouse**
 
-A pattern to **organize data into quality layers** inside the lakehouse.
-
 ####  Bronze Layer:
-
 * Raw, ingested data.
 * Typically unfiltered or semi-structured.
 * Stored as-is for audit/replay purposes.
 
 ####  Silver Layer:
-
 * Cleaned and conformed data.
 * Joins, filters, schema enforcement applied.
 * Used for analytics across departments.
 
 ####  Gold Layer:
-
 * Business-level aggregates and metrics.
 * Used for reporting, BI tools, dashboards.
 
@@ -80,8 +75,6 @@ A pattern to **organize data into quality layers** inside the lakehouse.
 
 
 ###  **6. Databricks Architecture (2024)**
-
-**Control Plane vs Compute Plane**
 
 * **Control Plane (Managed by Databricks)**:
 
@@ -116,7 +109,6 @@ A pattern to **organize data into quality layers** inside the lakehouse.
 
 * Tables are defined with a **metastore catalog** (`catalog.schema.table`).
 * Databricks supports:
-
   * **Managed tables**: Data stored inside the metastore.
   * **External tables**: Data resides in external storage (e.g., ADLS).
 
