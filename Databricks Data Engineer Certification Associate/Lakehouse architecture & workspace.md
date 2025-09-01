@@ -19,7 +19,7 @@
 
 | Feature      | Data Lake                   | Data Warehouse     | Lakehouse              |
 | ------------ | --------------------------- | ------------------ | ---------------------- |
-| Format       | Open, raw                   | Closed, structured | Open                   |
+| Format       | Open(non-proprietory), raw  | Closed(proprietory), structured | Open      |
 | Data types   | All (raw, semi, structured) | Structured only    | All                    |
 | Schema       | Schema-on-read              | Schema-on-write    | Both                   |
 | Cost         | Low                         | High               | Medium                 |
@@ -30,10 +30,11 @@
 
 ### **3. Delta Lake – Core of the Lakehouse**
 
-**Delta Lake** is an open-source **storage layer** that brings **ACID transactions**, **schema enforcement**, and **time travel** to data lakes.
+**Delta Lake** is an open-source **storage framework layer** that brings **ACID transactions**, **schema enforcement**, and **time travel** to data lakes. This is the technology that enables building a lakehouse. 
 
 #### Key Concepts:
 
+* Delta lake is a component that is deployed in the cluster as part of the **databricks runtime**. 
 * Built on top of **Apache Parquet**.
 * Stores data files + a **transaction log (delta log)**.
 * Guarantees **read/write consistency** and avoids **dirty reads**.
