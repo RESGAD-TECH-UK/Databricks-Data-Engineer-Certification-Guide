@@ -42,12 +42,12 @@
 
 ####  Delta Lake Technical Details:
 
-* When a **Delta Table** is written to, a `.parquet` file is created and the metadata is logged in a **delta log (JSON)**.
+* When a **Delta Table** is written to, a `.parquet` file is created and the metadata is logged in a **delta log (JSON)**. This order ensures that incomplete or failed write files are never read, since the reader can’t find them in the delta log.
 * Spark queries check the delta log to find **active versions** of data, then checks the active parquet file for the data.
 * Supports **time travel** (query previous versions) using `VERSION AS OF` or `TIMESTAMP AS OF`.
+* Since Parquet files are **immutable**, any time you make an update a new copy of the file containing the updated record is created. The old copy is then marked as inactive in the delta log.
 
-
-##  **4. Delta Lake Advantages**
+####  Delta Lake Advantages**
 
 * **Open-source**: No vendor lock-in.
 * **Supports ACID transactions** (atomic, consistent, isolated, durable).
@@ -55,8 +55,15 @@
 * **Versioning**: Each change to data is logged with snapshots.
 * **Error resilience**: Handles partial writes, retries, and corrupted file detection.
 
+#### Delta Table Operations:
 
-## **5. Medallion Architecture in Lakehouse**
+* `MERGE INTO`: Upsert pattern.
+* `OPTIMIZE`: Compact small files.
+* `VACUUM`: Clean old files.
+* `DESCRIBE HISTORY`: View version history.
+
+
+## **4. Medallion Architecture in Lakehouse**
 
 ####  Bronze Layer:
 * Raw, ingested data.
@@ -75,7 +82,7 @@
 >  Use **Delta Live Tables** to manage transformation pipelines across Bronze → Silver → Gold automatically.
 
 
-##  **6. Databricks Architecture (2024)**
+##  **5. Databricks Architecture (2024)**
 
 * **Control Plane (Managed by Databricks)**:
 
@@ -98,7 +105,7 @@
 * Classic compute plane jobs are billed to **your cloud account**.
 
 
-##  **7. Databricks Unity Catalog**
+##  **6. Databricks Unity Catalog**
 
 * Unified governance layer for **data access control**, **audit**, and **discovery**.
 * Manages metadata across **workspaces and clouds**.
@@ -106,23 +113,7 @@
 * **Replaces Hive Metastore** in newer deployments.
 
 
-## **8. Delta Tables in Practice**
-
-* Tables are defined with a **metastore catalog** (`catalog.schema.table`).
-* Databricks supports:
-  * **Managed tables**: Data stored inside the metastore.
-  * **External tables**: Data resides in external storage (e.g., ADLS).
-
-#### Delta Table Operations:
-
-* `MERGE INTO`: Upsert pattern.
-* `OPTIMIZE`: Compact small files.
-* `VACUUM`: Clean old files.
-* `DESCRIBE HISTORY`: View version history.
-
-
-
-##  **9. Databricks Workspace Essentials**
+##  **7. Databricks Workspace Essentials**
 
 A Databricks workspace includes:
 
