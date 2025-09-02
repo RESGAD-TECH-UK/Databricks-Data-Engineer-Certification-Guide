@@ -1,7 +1,7 @@
 # **Databricks Lakehouse Architecture & Workspace**
 
 
-### **1. Introduction to Lakehouse Architecture**
+## **1. Introduction to Lakehouse Architecture**
 
 **Lakehouse = Data Lake + Data Warehouse**
 
@@ -15,7 +15,7 @@
 * Scalable, low-cost storage + high-quality, ACID-compliant transactions.
 
 
-### **2. Data Lake vs Data Warehouse vs Lakehouse**
+## **2. Data Lake vs Data Warehouse vs Lakehouse**
 
 | Feature      | Data Lake                   | Data Warehouse     | Lakehouse              |
 | ------------ | --------------------------- | ------------------ | ---------------------- |
@@ -28,7 +28,7 @@
 
 
 
-### **3. Delta Lake – Core of the Lakehouse**
+## **3. Delta Lake – Core of the Lakehouse**
 
 **Delta Lake** is an open-source **storage framework layer** that brings **ACID transactions**, **schema enforcement**, and **time travel** to data lakes. This is the technology that enables building a lakehouse. 
 
@@ -47,7 +47,7 @@
 * Supports **time travel** (query previous versions) using `VERSION AS OF` or `TIMESTAMP AS OF`.
 
 
-###  **4. Delta Lake Advantages**
+##  **4. Delta Lake Advantages**
 
 * **Open-source**: No vendor lock-in.
 * **Supports ACID transactions** (atomic, consistent, isolated, durable).
@@ -56,7 +56,7 @@
 * **Error resilience**: Handles partial writes, retries, and corrupted file detection.
 
 
-### **5. Medallion Architecture in Lakehouse**
+## **5. Medallion Architecture in Lakehouse**
 
 ####  Bronze Layer:
 * Raw, ingested data.
@@ -75,7 +75,7 @@
 >  Use **Delta Live Tables** to manage transformation pipelines across Bronze → Silver → Gold automatically.
 
 
-###  **6. Databricks Architecture (2024)**
+##  **6. Databricks Architecture (2024)**
 
 * **Control Plane (Managed by Databricks)**:
 
@@ -98,7 +98,7 @@
 * Classic compute plane jobs are billed to **your cloud account**.
 
 
-###  **7. Databricks Unity Catalog**
+##  **7. Databricks Unity Catalog**
 
 * Unified governance layer for **data access control**, **audit**, and **discovery**.
 * Manages metadata across **workspaces and clouds**.
@@ -106,7 +106,7 @@
 * **Replaces Hive Metastore** in newer deployments.
 
 
-### **8. Delta Tables in Practice**
+## **8. Delta Tables in Practice**
 
 * Tables are defined with a **metastore catalog** (`catalog.schema.table`).
 * Databricks supports:
@@ -122,7 +122,7 @@
 
 
 
-###  **9. Databricks Workspace Essentials**
+##  **9. Databricks Workspace Essentials**
 
 A Databricks workspace includes:
 
