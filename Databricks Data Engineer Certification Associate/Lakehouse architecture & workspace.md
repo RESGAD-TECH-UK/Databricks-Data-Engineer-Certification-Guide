@@ -43,7 +43,7 @@
 ####  Delta Lake Technical Details:
 
 * When a **Delta Table** is written to, a `.parquet` file is created and the metadata is logged in a **delta log (JSON)**.
-* Spark queries check the delta log to find **active versions** of data.
+* Spark queries check the delta log to find **active versions** of data, then checks the active parquet file for the data.
 * Supports **time travel** (query previous versions) using `VERSION AS OF` or `TIMESTAMP AS OF`.
 
 
