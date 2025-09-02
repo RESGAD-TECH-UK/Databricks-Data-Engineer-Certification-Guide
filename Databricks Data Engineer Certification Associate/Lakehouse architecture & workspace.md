@@ -48,11 +48,13 @@
 * Since Parquet files are **immutable**, any time you make an update a new copy of the file containing the updated record is created. The old copy is then marked as inactive in the delta log.
 * This log captures metadata information about the changes made to the Delta table. This includes the **operation type**, the name of the newly created data files, the **transaction timestamp**, and any other relevant information.
 * When a reader queries the table, it doesn’t scan all the Parquet files directly. Instead, it looks inside the _delta_log/ folder, finds the latest numbered JSON file (or a checkpoint), and uses it to determine the current, valid set of data files. In this way, the transaction log acts as the single source of truth for the table’s state.
-  ```pgsql
+
+
+```pgsql
 000010.checkpoint.parquet
 000011.json
 000012.json
-  ```
+```
 
 ####  Delta Lake Advantages: 
 
