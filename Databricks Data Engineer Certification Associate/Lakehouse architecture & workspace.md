@@ -47,7 +47,7 @@
 * Supports **time travel** (query previous versions) using `VERSION AS OF` or `TIMESTAMP AS OF`.
 * Since Parquet files are **immutable**, any time you make an update a new copy of the file containing the updated record is created. The old copy is then marked as inactive in the delta log.
 * This log captures metadata information about the changes made to the Delta table. This includes the **operation type**, the name of the newly created data files, the **transaction timestamp**, and any other relevant information.
-* When a reader queries the table, it doesn’t scan all the Parquet files directly. Instead, it looks inside the _delta_log/ folder, finds the latest numbered JSON file (or a checkpoint), and uses it to determine the current, valid set of data files. In this way, the transaction log acts as the single source of truth for the table’s state.
+* When a reader queries the table, it doesn’t scan all the Parquet files directly. Instead, it looks inside the _delta_log/ folder, finds the latest numbered JSON file (or a checkpoint), and uses it to determine the current, valid set of data files. In this way, the transaction log acts as the single source of truth for the table’s state. A reader can load the checkpoint at version 10, then just apply 11 and 12 to reconstruct the current snapshot.
 
 
 ```pgsql
@@ -63,6 +63,8 @@
 * **Multiple query engines**: SQL, Spark, Python, etc.
 * **Versioning**: Each change to data is logged with snapshots.
 * **Error resilience**: Handles partial writes, retries, and corrupted file detection.
+*  **Scalable metadata handling**:It also includes table statistics to accelerate operations.
+*  **Full audit logging**: The transaction log serves as a comprehensive audit trail that captures every change occurring on the table. 
 
 #### Delta Table Operations:
 
@@ -71,8 +73,20 @@
 * `VACUUM`: Clean old files.
 * `DESCRIBE HISTORY`: View version history.
 
-#### **Delta Table Hands-On**
+#### **Delta Table Hands-On**:
 
+**Creating a Delta Table**
+
+```pyspark
+CREATE TABLE product_info (
+  product_id INT,
+  product_name STRING,
+  category STRING,
+  price DOUBLE,
+  quantity INT
+)
+USING DELTA;
+```
 
 
 ## **4. Medallion Architecture in Lakehouse**
