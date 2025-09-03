@@ -17,7 +17,7 @@
 
 ## **2. Data Lake vs Data Warehouse vs Lakehouse**
 
-> | Feature      | Data Lake                   | Data Warehouse     | Lakehouse              |
+| Feature      | Data Lake                   | Data Warehouse     | Lakehouse              |
 | ------------ | --------------------------- | ------------------ | ---------------------- |
 | Format       | Open(non-proprietory), raw  | Closed(proprietory), structured | Open      |
 | Data types   | All (raw, semi, structured) | Structured only    | All                    |
@@ -75,8 +75,7 @@
 
 #### **Delta Table Hands-On**:
 
-1. **Creating a Delta Table**: Creating Delta Lake tables closely resembles the conventional method of creating tables in standard SQL. It’s worth mentioning that explicitly specifying USING DELTA identifies Delta Lake as the storage layer for the table, but this clause is optional. Even in its absence, the table will still be recognized as a Delta Lake table since DELTA is the default table format in Databricks.
-
+> 1. **Creating a Delta Table**: Creating Delta Lake tables closely resembles the conventional method of creating tables in standard SQL. It’s worth mentioning that explicitly specifying USING DELTA identifies Delta Lake as the storage layer for the table, but this clause is optional. Even in its absence, the table will still be recognized as a Delta Lake table since DELTA is the default table format in Databricks.
 ```pyspark
 CREATE TABLE product_info (
   product_id INT,
