@@ -76,16 +76,16 @@
 #### **Delta Table Hands-On**:
 
 1. **Creating a Delta Table**: Creating Delta Lake tables closely resembles the conventional method of creating tables in standard SQL. It’s worth mentioning that explicitly specifying USING DELTA identifies Delta Lake as the storage layer for the table, but this clause is optional. Even in its absence, the table will still be recognized as a Delta Lake table since DELTA is the default table format in Databricks.
-```pyspark
-CREATE TABLE product_info (
-  product_id INT,
-  product_name STRING,
-  category STRING,
-  price DOUBLE,
-  quantity INT
-)
-USING DELTA;
-```
+>```pyspark
+>CREATE TABLE product_info (
+> product_id INT,
+> product_name STRING,
+> category STRING,
+> price DOUBLE,
+> quantity INT
+>)
+>USING DELTA;
+>```
 
 2. **Creating a Standard Catalog**: Similar to creating a database in SQL Server, in Databricks you can create a standard catalog to serve that organizational purpose. Within a catalog, you can create databases, which are more like schemas in SQL Server.Types in Databricks: Default Catalog--Usually hive_metastore or main. & Unity Catalog--Introduced for fine-grained governance; supports multiple catalogs per workspace.
 
