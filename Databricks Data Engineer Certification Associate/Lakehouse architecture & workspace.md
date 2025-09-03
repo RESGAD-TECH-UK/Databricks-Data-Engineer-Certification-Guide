@@ -101,7 +101,40 @@ CREATE CATALOG my_catalog;
 | Scope    | Within a catalog          | Across workspace                               |
 | Purpose  | Organize tables logically | Organize multiple databases and control access |
 
+The Standard Catalog is different from the Unity Catalog
 
+| Feature          | Standard Catalog | Unity Catalog                     |
+| ---------------- | ---------------- | --------------------------------- |
+| Governance       | Basic            | Fine-grained (table/column level) |
+| Scope            | Single workspace | Multi-workspace / centralized     |
+| Metadata storage | Hive metastore   | Unity Catalog metastore           |
+| Access control   | Workspace-level  | Centralized, auditable            |
+
+3. **Output console**: In a notebook cell, if you run multiple operations, only the result of the last operation is displayed in the output console. To see the results of earlier operations, you must explicitly print them.
+
+4. **Exploring the Table Directory**: To view metadata for a Delta table, use the DESCRIBE DETAIL command. It returns key information such as numFiles, which shows the number of data files in the current table version. For external tables, it also provides the storage location. However, for tables managed by Unity Catalog, the location is not shown, since Unity Catalog deliberately hides physical storage details and treats tables as logical objects.
+You can view table metadata with:
+
+```pyspark
+DESCRIBE DETAIL table_name;
+```
+
+To inspect the underlying files that make up the table, list the contents of its storage location:
+
+```pyspark
+%fs ls 'dbfs:/.....table path...'
+```
+
+5. **Exploring Table History**: The transaction log maintains the history of changes made to the tables. To access the history of a table, you can use the DESCRIBE HISTORY command:
+
+```pyspark
+DESCRIBE HISTORY product_info
+```
+To view the files tht make up the transaction log by using the `%fs ls`:
+
+```pyspark
+%fs ls 'dbfs:/.....table path.../_delta_log'
+```
 ## **4. Medallion Architecture in Lakehouse**
 
 ####  Bronze Layer:
