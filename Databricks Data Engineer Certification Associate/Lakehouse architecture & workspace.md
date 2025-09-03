@@ -75,7 +75,7 @@
 
 #### **Delta Table Hands-On**:
 
-> 1. **Creating a Delta Table**: Creating Delta Lake tables closely resembles the conventional method of creating tables in standard SQL. It’s worth mentioning that explicitly specifying USING DELTA identifies Delta Lake as the storage layer for the table, but this clause is optional. Even in its absence, the table will still be recognized as a Delta Lake table since DELTA is the default table format in Databricks.
+1. **Creating a Delta Table**: Creating Delta Lake tables closely resembles the conventional method of creating tables in standard SQL. It’s worth mentioning that explicitly specifying USING DELTA identifies Delta Lake as the storage layer for the table, but this clause is optional. Even in its absence, the table will still be recognized as a Delta Lake table since DELTA is the default table format in Databricks.
 ```pyspark
 CREATE TABLE product_info (
   product_id INT,
@@ -111,7 +111,7 @@ The Standard Catalog is different from the Unity Catalog
 
 3. **Output console**: In a notebook cell, if you run multiple operations, only the result of the last operation is displayed in the output console. To see the results of earlier operations, you must explicitly print them.
 
-4. **Exploring the Table Directory**: To view metadata for a Delta table, use the DESCRIBE DETAIL command. It returns key information such as numFiles, which shows the number of data files in the current table version. For external tables, it also provides the storage location. However, for tables managed by Unity Catalog, the location is not shown, since Unity Catalog deliberately hides physical storage details and treats tables as logical objects.
+4. **Table Directory**: To view metadata for a Delta table, use the DESCRIBE DETAIL command. It returns key information such as numFiles, which shows the number of data files in the current table version. For external tables, it also provides the storage location. However, for tables managed by Unity Catalog, the location is not shown, since Unity Catalog deliberately hides physical storage details and treats tables as logical objects.
 You can view table metadata with:
 
 ```pyspark
@@ -124,7 +124,7 @@ To inspect the underlying files that make up the table, list the contents of its
 %fs ls 'dbfs:/.....table path...'
 ```
 
-5. **Exploring Table History**: The transaction log maintains the history of changes made to the tables. To access the history of a table, you can use the DESCRIBE HISTORY command:
+5. **Table History**: The transaction log maintains the history of changes made to the tables. To access the history of a table, you can use the DESCRIBE HISTORY command:
 
 ```pyspark
 DESCRIBE HISTORY product_info
@@ -134,6 +134,13 @@ To view the files tht make up the transaction log by using the `%fs ls`:
 ```pyspark
 %fs ls 'dbfs:/.....table path.../_delta_log'
 ```
+
+6. **Time Travel**: Time travel is a feature in Delta Lake that allows you to retrieve previous versions of data in Delta Lake tables. This versioning provides an audit trail of all the changes that have happened on the table.
+> ***Querying Older Versions***:
+> ```pyspark
+> SELECT * FROM <table_name> TIMESTAMP AS OF <timestamp>
+> ```
+   
 ## **4. Medallion Architecture in Lakehouse**
 
 ####  Bronze Layer:
