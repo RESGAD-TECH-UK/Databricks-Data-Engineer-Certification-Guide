@@ -17,7 +17,7 @@
 
 ## **2. Data Lake vs Data Warehouse vs Lakehouse**
 
-| Feature      | Data Lake                   | Data Warehouse     | Lakehouse              |
+> | Feature      | Data Lake                   | Data Warehouse     | Lakehouse              |
 | ------------ | --------------------------- | ------------------ | ---------------------- |
 | Format       | Open(non-proprietory), raw  | Closed(proprietory), structured | Open      |
 | Data types   | All (raw, semi, structured) | Structured only    | All                    |
