@@ -89,51 +89,52 @@
 
 2. **Creating a Standard Catalog**: Similar to creating a database in SQL Server, in Databricks you can create a standard catalog to serve that organizational purpose. Within a catalog, you can create databases, which are more like schemas in SQL Server.Types in Databricks: Default Catalog--Usually hive_metastore or main. & Unity Catalog--Introduced for fine-grained governance; supports multiple catalogs per workspace.
 
-```pyspark
-CREATE CATALOG my_catalog;
-```
+>```pyspark
+>CREATE CATALOG my_catalog;
+>```
 
-| Feature  | Database                  | Standard Catalog                               |
-| -------- | ------------------------- | ---------------------------------------------- |
-| Level    | Mid-level container       | Top-level container                            |
-| Contains | Tables, views, functions  | Databases                                      |
-| Scope    | Within a catalog          | Across workspace                               |
-| Purpose  | Organize tables logically | Organize multiple databases and control access |
+>| Feature  | Database                  | Standard Catalog                               |
+>| -------- | ------------------------- | ---------------------------------------------- |
+>| Level    | Mid-level container       | Top-level container                            |
+>| Contains | Tables, views, functions  | Databases                                      |
+>| Scope    | Within a catalog          | Across workspace                               |
+>| Purpose  | Organize tables logically | Organize multiple databases and control access |
 
 The Standard Catalog is different from the Unity Catalog
 
-| Feature          | Standard Catalog | Unity Catalog                     |
-| ---------------- | ---------------- | --------------------------------- |
-| Governance       | Basic            | Fine-grained (table/column level) |
-| Scope            | Single workspace | Multi-workspace / centralized     |
-| Metadata storage | Hive metastore   | Unity Catalog metastore           |
-| Access control   | Workspace-level  | Centralized, auditable            |
+>| Feature          | Standard Catalog | Unity Catalog                     |
+>| ---------------- | ---------------- | --------------------------------- |
+>| Governance       | Basic            | Fine-grained (table/column level) |
+>| Scope            | Single workspace | Multi-workspace / centralized     |
+>| Metadata storage | Hive metastore   | Unity Catalog metastore           |
+>| Access control   | Workspace-level  | Centralized, auditable            |
 
 3. **Output console**: In a notebook cell, if you run multiple operations, only the result of the last operation is displayed in the output console. To see the results of earlier operations, you must explicitly print them.
 
 4. **Table Directory**: To view metadata for a Delta table, use the DESCRIBE DETAIL command. It returns key information such as numFiles, which shows the number of data files in the current table version. For external tables, it also provides the storage location. However, for tables managed by Unity Catalog, the location is not shown, since Unity Catalog deliberately hides physical storage details and treats tables as logical objects.
 You can view table metadata with:
 
-```pyspark
-DESCRIBE DETAIL table_name;
-```
+>```pyspark
+>DESCRIBE DETAIL table_name;
+>```
 
-To inspect the underlying files that make up the table, list the contents of its storage location:
+>To inspect the underlying files that make up the table, list the contents of its storage location:
 
-```pyspark
-%fs ls 'dbfs:/.....table path...'
-```
+>```pyspark
+>%fs ls 'dbfs:/.....table path...'
+>```
 
 5. **Table History**: The transaction log maintains the history of changes made to the tables. To access the history of a table, you can use the DESCRIBE HISTORY command:
 
-```pyspark
-DESCRIBE HISTORY product_info
-```
-To view the files tht make up the transaction log by using the `%fs ls`:
+>```pyspark
+>DESCRIBE HISTORY product_info
+>```
 
-```pyspark
-%fs ls 'dbfs:/.....table path.../_delta_log'
-```
+>To view the files tht make up the transaction log by using the `%fs ls`:
+
+>```pyspark
+>%fs ls 'dbfs:/.....table path.../_delta_log'
+>```
 
 6. **Time Travel**: Time travel is a feature in Delta Lake that allows you to retrieve previous versions of data in Delta Lake tables. This versioning provides an audit trail of all the changes that have happened on the table.
 > ***Querying Older Versions***:
