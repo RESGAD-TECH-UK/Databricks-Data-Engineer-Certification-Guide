@@ -137,11 +137,26 @@ You can view table metadata with:
 >```
 
 6. **Time Travel**: Time travel is a feature in Delta Lake that allows you to retrieve previous versions of data in Delta Lake tables. This versioning provides an audit trail of all the changes that have happened on the table.
-> ***Querying Older Versions***:
+> *Querying Older Versions by timestamp*:
 > ```pyspark
 > SELECT * FROM <table_name> TIMESTAMP AS OF <timestamp>
 > ```
-   
+> *Querying Older Versions by version number*:
+
+> ```pyspark
+> SELECT * FROM <table_name> VERSION AS OF <version>
+> SELECT * FROM product_info@v2 --where 2 is the version number
+> ```
+
+> *Rolling Back to Previous Versions*:
+
+> ```pyspark
+> RESTORE TABLE <table_name> TO TIMESTAMP AS OF <timestamp>
+> RESTORE TABLE <table_name> TO VERSION AS OF <version>
+> ```
+
+
+
 ## **4. Medallion Architecture in Lakehouse**
 
 ####  Bronze Layer:
