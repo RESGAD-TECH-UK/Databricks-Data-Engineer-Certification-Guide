@@ -155,6 +155,16 @@ You can view table metadata with:
 > RESTORE TABLE <table_name> TO VERSION AS OF <version>
 > ```
 
+7. **Optimizing Delta Lake Tables**: Say you have a table that has accumulated many small files due to frequent write operations. By running the OPTIMIZE command, these small files can be compacted into one or more larger files. 
+
+>```pyspark
+>OPTIMIZE <table_name>
+>```
+>A notable extension of the OPTIMIZE command is the ability to leverage Z-Order indexing. Z-Order indexing involves the reorganization and co-location of column information within the same set of files. To perform Z-Order indexing, you simply add the ZORDER BY keyword to the OPTIMIZE command.
+>```pyspark
+>OPTIMIZE <table_name>
+>ZORDER BY <column_names>
+>```
 
 
 ## **4. Medallion Architecture in Lakehouse**
