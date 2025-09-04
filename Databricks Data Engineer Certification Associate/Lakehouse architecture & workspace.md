@@ -155,7 +155,7 @@ You can view table metadata with:
 > RESTORE TABLE <table_name> TO VERSION AS OF <version>
 > ```
 
-7. **Optimizing Delta Lake Tables**: Say you have a table that has accumulated many small files due to frequent write operations. By running the OPTIMIZE command, these small files can be compacted into one or more larger files. 
+7. **Optimizing Delta Lake Tables**: Say you have a table that has accumulated many small files due to frequent write operations. By running the OPTIMIZE command, these small files can be compacted into one or more larger files, while the small files will be soft deleted.
 
 >```pyspark
 >OPTIMIZE <table_name>
@@ -166,6 +166,10 @@ You can view table metadata with:
 >ZORDER BY <column_names>
 >```
 
+8. **Vacuuming**: The VACUUM command in Delta Lake enables you to clean up those unwanted files or soft deleted files from the optimization process, ensuring efficient storage management that saves storage space and cost. The process involves specifying a retention period threshold for the files, so the command will automatically remove all files older than this threshold. The default retention period is set to seven days, meaning that the vacuum operation will prevent you from deleting files less than seven days old. If you try to use rentation period lower than 7 days, you will get an error warning message. 
+>```pyspark
+>VACUUM <table_name> [RETAIN num HOURS]
+>```
 
 ## **4. Medallion Architecture in Lakehouse**
 
