@@ -1,5 +1,5 @@
 # Introduction to Databricks Platform
-<img width="500" height="600" alt="image" src="https://github.com/user-attachments/assets/be600579-bf3c-4506-b2fe-7172c282db06" />
+<img width="500" height="400" alt="image" src="https://github.com/user-attachments/assets/be600579-bf3c-4506-b2fe-7172c282db06" />
 
 #### **1. Databricks workspace**:
 At the top of the architecture is the Databricks workspace, which serves as the user interface for interacting with the platform. It provides an interactive
