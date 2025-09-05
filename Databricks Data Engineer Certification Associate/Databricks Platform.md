@@ -37,3 +37,15 @@ The control plane is managed by Databricks and hosts various platform services w
 #### **2. Data plane**:
 The data plane, on the other hand, resides within the user’s own cloud subscription. This is where actual storage and classic compute resources (non-serverless) are provisioned and managed. When a user sets up a Spark cluster, the virtual machines that comprise the cluster are deployed in the data plane, within the user’s cloud account. Similarly, storage resources, such as those used by the Databricks File System (DBFS) or Unity Catalog, are also deployed in the data plane.
 
+## Apache Spark
+
+| Feature                   | Traditional Data Processing Engine                                           | Apache Spark on Databricks                                                                             |
+| ------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| **Processing Model**      | Processes data **sequentially** or with limited parallelism                  | Processes data in **parallel across distributed cluster nodes**                                        |
+| **Scalability**           | Scaling is hardware-bound (vertical scaling → add more power to one machine) | Cloud-native **horizontal scaling** → add/remove nodes dynamically                                     |
+| **Data Storage/Access**   | Relies heavily on **disk I/O** (slow for large/iterative tasks)              | Optimized for **in-memory processing**, reducing read/write overhead                                   |
+| **Programming Languages** | Often limited to **SQL** or vendor-specific languages                        | Supports **Python, SQL, Scala, R, Java** seamlessly                                                    |
+| **Workload Types**        | Primarily **batch-oriented** (historical analysis only)                      | Handles both **batch** (historical) and **streaming** (real-time)                                      |
+| **Data Types Supported**  | Best with **structured data** (tables, rows, columns)                        | Handles **structured, semi-structured, and unstructured data** (CSV, JSON, images, video, nested data) |
+| **Performance**           | Slower for complex analytics (due to repeated disk reads/writes)             | Faster due to **distributed + in-memory execution**                                                    |
+| **Integration**           | Typically tied to on-premise systems                                         | Deeply integrated with **cloud-based clusters and Delta Lake** for modern data pipelines               |
