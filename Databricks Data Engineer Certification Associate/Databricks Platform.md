@@ -67,7 +67,31 @@ This is the legacy service used for integrating your workspace with Git reposito
 This folder contains deleted items, which are retained for 30 days before being permanently removed.
 
 ## Clusters
-Clusters in Databricks form the backbone of data processing and analytics on the platform. A cluster is essentially a collection of computers, often referred to as nodes, instances, or virtual machines, working together as a single entity. In the context of Apache Spark, which powers Databricks, a cluster comprises a master node known as the driver and several worker nodes, as illustrated in Figure below. The driver node is primarily responsible for orchestrating the activities of the worker nodes, which execute tasks in parallel, thereby enabling efficient processing of large-scale data.
+Clusters in Databricks form the backbone of data processing and analytics on the platform. A cluster is essentially a collection of computers, often referred to as nodes, instances, or virtual machines, working together as a single entity. In the context of Apache Spark, which powers Databricks, a cluster comprises a master node known as the driver and several worker nodes, as illustrated in the Figure below. The driver node is primarily responsible for orchestrating the activities of the worker nodes, which execute tasks in parallel, thereby enabling efficient processing of large-scale data.
 
 <img width="301" height="348" alt="image" src="https://github.com/user-attachments/assets/a7769bd0-527c-402e-829f-1f0a4b078dc4" />
 
+Databricks offers two primary types of clusters: all-purpose clusters and job clusters. Each serves distinct purposes and use cases, tailored to different stages of the data engineering and analytics lifecycle.
+
+| Feature             | All-purpose Cluster                         | Job Cluster                                |
+| ------------------- | ------------------------------------------- | ------------------------------------------ |
+| **Usage**           | Interactive development and data analysis   | Automated job execution                    |
+| **Management**      | Manually created and managed by the user    | Automatically created by the job scheduler |
+| **Termination**     | Manual or auto-termination after inactivity | Automatic termination upon task completion |
+| **Cost Efficiency** | Comes at a higher expense                   | Less expensive                             |
+
+### Databricks Pools
+In addition to offering various types of clusters, Databricks provides cluster pools to further optimize resource usage and reduce operational latency. Cluster pools are a powerful tool for users who need to minimize the time it takes to spin up clusters, especially in environments where job execution speed is critical.
+
+A cluster pool in Databricks is essentially a group of pre-configured, idle virtual machines that are ready to be assigned to clusters as needed. The primary advantage of using a cluster pool is the reduction in both cluster start time and autoscaling time whenever there are available nodes in the pool. This can be particularly beneficial in scenarios where time is a critical factor, such as in automated report generation and real-time data processing tasks.
+
+While cluster pools offer significant operational benefits, they come with important cost considerations. It’s essential to understand that even though Databricks itself does not charge for the idle instances in a pool, your cloud provider does. This is because these instances, although idle, are actively running on your cloud infrastructure, and as such, they incur standard compute costs.
+
+### Creating All-Purpose Clusters
+This is done in the compute tab from the left siderbar in your databricks. 
+
+**Configuring the cluster: Single-node versus multi-node**
+We you configure your cluster to a **single-node cluster**, it will operate with just a driver node, eliminating the need for additional worker nodes. In this configuration, the driver handles both driver and worker responsibilities, executing all Spark jobs on a single machine. This setup is more cost effective as it consumes fewer resources. While **Multi-node cluster** is used when you want to handle larger datasets or more complex processing tasks, you can opt for a multi-node cluster, which includes one driver node and multiple worker nodes. This setup allows parallel processing, making it suitable for heavier workloads.
+
+**Configuring the access mode**
+Databricks clusters offer different access modes depending on how the cluster is intended to be used: **Shared access mode**, this allows multiple users to share the cluster simultaneously but restricts workloads to SQL and Python only. Shared clusters are useful in collaborative environments where several users need to access the same cluster. **Single user mode**, this mode is appropriate if you are the only one using the cluster. It ensures that the cluster resources are dedicated solely to your tasks, potentially improving performance and efficiency.
