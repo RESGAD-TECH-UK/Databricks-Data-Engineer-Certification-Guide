@@ -58,10 +58,16 @@ The DBFS acts as an abstraction layer that simplifies file management across the
 The Home directory is your default location within the workspace. It is personalized to each user’s personal directory, providing a semi-private space where you can store your files and folders.
 
 **2. Workspace directory**:
-This is the root folder that contains all users’ personal directories. From here, you can also access your Home directory by going to Users > yourname@example.com.
+This is the root folder that contains all users’ personal directories. From here, you can also access your Home directory by going to Users >user_name.
 
 **3. Repos**:
 This is the legacy service used for integrating your workspace with Git repositories. It has now been replaced by Git folders, which we cover in detail at the end of this chapter in “Creating Git Folders”.
 
 **4. Trash**
 This folder contains deleted items, which are retained for 30 days before being permanently removed.
+
+## Clusters
+Clusters in Databricks form the backbone of data processing and analytics on the platform. A cluster is essentially a collection of computers, often referred to as nodes, instances, or virtual machines, working together as a single entity. In the context of Apache Spark, which powers Databricks, a cluster comprises a master node known as the driver and several worker nodes, as illustrated in Figure below. The driver node is primarily responsible for orchestrating the activities of the worker nodes, which execute tasks in parallel, thereby enabling efficient processing of large-scale data.
+
+<img width="301" height="348" alt="image" src="https://github.com/user-attachments/assets/a7769bd0-527c-402e-829f-1f0a4b078dc4" />
+
