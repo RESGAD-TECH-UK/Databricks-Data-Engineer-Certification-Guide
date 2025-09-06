@@ -81,11 +81,11 @@ Databricks offers two primary types of clusters: all-purpose clusters and job cl
 | **Cost Efficiency** | Comes at a higher expense                   | Less expensive                             |
 
 ### Databricks Pools
-In addition to offering various types of clusters, Databricks provides cluster pools to further optimize resource usage and reduce operational latency. Cluster pools are a powerful tool for users who need to minimize the time it takes to spin up clusters, especially in environments where job execution speed is critical.
+In addition to offering various types of **clusters**, Databricks provides **cluster pools** to further optimize **resource usage** and reduce **operational latency**. Cluster pools are a powerful tool for users who need to minimize the **time** it takes to **spin up clusters**, especially in environments where job execution speed is critical.
 
-A cluster pool in Databricks is essentially a group of pre-configured, idle virtual machines that are ready to be assigned to clusters as needed. The primary advantage of using a cluster pool is the reduction in both cluster start time and autoscaling time whenever there are available nodes in the pool. This can be particularly beneficial in scenarios where time is a critical factor, such as in automated report generation and real-time data processing tasks.
+A **cluster pool** in Databricks is essentially a **group of pre-configured, idle virtual machines** that are ready to be assigned to clusters as needed. The primary advantage of using a **cluster pool** is the **reduction** in both **cluster start time** and **autoscaling time** whenever there are **available nodes** in the pool. This can be particularly beneficial in scenarios where time is a critical factor, such as in **automated report generation** and **real-time data processing** tasks.
 
-While cluster pools offer significant operational benefits, they come with important cost considerations. It’s essential to understand that even though Databricks itself does not charge for the idle instances in a pool, your cloud provider does. This is because these instances, although idle, are actively running on your cloud infrastructure, and as such, they incur standard compute costs.
+While cluster pools offer significant **operational benefits**, they come with important **cost considerations**. It’s essential to understand that even though Databricks itself does not charge for the **idle instances** in a pool, your cloud provider does. This is because these instances, although **idle**, are actively **running** on your cloud infrastructure, and as such, they incur **standard compute costs**.
 
 ### Creating All-Purpose Clusters
 This is done in the compute tab from the left siderbar in your databricks. 
