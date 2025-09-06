@@ -49,3 +49,15 @@ The data plane, on the other hand, resides within the user’s own cloud subscri
 | **Data Types Supported**  | Best with **structured data** (tables, rows, columns)                        | Handles **structured, semi-structured, and unstructured data** (CSV, JSON, images, video, nested data) |
 | **Performance**           | Slower for complex analytics (due to repeated disk reads/writes)             | Faster due to **distributed + in-memory execution**                                                    |
 | **Integration**           | Typically tied to on-premise systems                                         | Deeply integrated with **cloud-based clusters and Delta Lake** for modern data pipelines               |
+
+## Databricks File System (DBFS)
+The DBFS acts as an abstraction layer that simplifies file management across the distributed environment. It allows users to interact with cloud files as if they were stored on a local file system. When a file is created in a Databricks cluster and stored in the DBFS, it is actually persisted in the underlying cloud storage associated with your cloud provider. This design ensures that data remains durable and accessible, even after the Spark cluster is terminated.
+
+Home directory
+The Home directory is your default location within the workspace. It is personalized to each user’s personal directory, providing a semi-private space where you can store your files and folders.
+Workspace directory
+This is the root folder that contains all users’ personal directories. From here, you can also access your Home directory by going to Users > yourname@example.com.
+Repos
+This is the legacy service used for integrating your workspace with Git repositories. It has now been replaced by Git folders, which we cover in detail at the end of this chapter in “Creating Git Folders”.
+Trash
+This folder contains deleted items, which are retained for 30 days before being permanently removed.
