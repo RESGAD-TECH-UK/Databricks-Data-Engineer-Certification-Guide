@@ -54,4 +54,14 @@ DESCRIBE EXTENDED my_table;
 >-- or
 >DESCRIBE SCHEMA EXTENDED my_schema;
 >```
-Remember, you can manually remove the table directory and its content by running the `dbutils.fs.rm` function in Python.
+Remember, you can manually remove the table directory and its content by running the `dbutils.fs.rm` function in Python. E.g.,
+```pyspark
+dbutils.fs.rm("/databricks-datasets/")
+```
+
+### Setting Up Delta Tables
+One of the key features of Delta Lake tables is their flexibility in creation. While traditional methods like the regular `CREATE TABLE` statements are available, Databricks also supports CTAS, or `CREATE TABLE AS SELECT`, statements. CTAS statements allow the creation and population of tables at the same time based on the results of a SELECT query. This means that with CTAS statements, you can create a new table from existing data sources:
+``sql
+CREATE TABLE table_2
+AS SELECT * FROM table_1
+```
