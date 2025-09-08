@@ -61,7 +61,8 @@ dbutils.fs.rm("/databricks-datasets/")
 
 ### Setting Up Delta Tables
 One of the key features of Delta Lake tables is their flexibility in creation. While traditional methods like the regular `CREATE TABLE` statements are available, Databricks also supports CTAS, or `CREATE TABLE AS SELECT`, statements. CTAS statements allow the creation and population of tables at the same time based on the results of a SELECT query. This means that with CTAS statements, you can create a new table from existing data sources:
-``sql
+```sql
 CREATE TABLE table_2
 AS SELECT * FROM table_1
 ```
+Here are the different options of delta table definitions: [Table Creation syntax Options](Databricks Data Engineer Certification Associate/Code Snippet/Create Table Syntax.md)
