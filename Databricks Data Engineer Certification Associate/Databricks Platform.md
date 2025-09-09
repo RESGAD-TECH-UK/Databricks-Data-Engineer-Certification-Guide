@@ -148,6 +148,24 @@ The %run magic command in Databricks notebooks is a powerful tool that allows yo
 ```bash
 %run ./other_notebook
 ```
+>E.g., If `School-Setup` contains:
+```python
+school_name = "Greenwood High"
+def greet():
+    print(f"Welcome to {school_name}!")
+```
+Then executes `%run` another notebook as if its contents were copied into the current one.
+It’s often used for setup notebooks that contain shared functions, variables, or environment configuration.
+```python
+%run ../Includes/School-Setup
+```
+`../Includes/School-Setup` is the relative path to another notebook.
+When this line runs, all the code inside School-Setup (probably definitions, imports, variables, maybe data mount configs) gets executed in your current notebook’s context.
+That means any variables, functions, or Spark configs defined there will be available to the rest of your notebook.
+```python
+greet()  # → Welcome to Greenwood High!
+```
+
 
 **FS magic command**
 The %fs magic command provides a simple way to execute file system operations directly within your notebook cells. This command allows you to perform various tasks, such as copying, moving, and deleting files and directories within your cloud storage. One of the most common uses of the %fs magic command is listing the contents of a directory. For instance, if you want to explore your datasets directory, you can use the following command:
