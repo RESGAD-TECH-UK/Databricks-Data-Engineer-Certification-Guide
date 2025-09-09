@@ -93,6 +93,7 @@
 >CREATE CATALOG my_catalog;
 >```
 
+You have the flexibility to create a database using either the `CREATE DATABASE` or `CREATE SCHEMA` syntax, as they are functionally equivalent.
 >| Feature  | Database                  | Standard Catalog                               |
 >| -------- | ------------------------- | ---------------------------------------------- |
 >| Level    | Mid-level container       | Top-level container                            |
