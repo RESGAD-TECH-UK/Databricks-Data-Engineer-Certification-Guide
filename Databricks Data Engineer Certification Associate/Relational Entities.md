@@ -65,4 +65,77 @@ One of the key features of Delta Lake tables is their flexibility in creation. W
 CREATE TABLE table_2
 AS SELECT * FROM table_1
 ```
-Here are the different options of delta table definitions: [Table Creation syntax Options](Databricks Data Engineer Certification Associate/Code Snippet/Create Table Syntax.md)
+Here are the different options of delta table definitions: [Table Creation syntax Options](https://github.com/Stephen-Data-Engineer-Public/Databricks-Data-Engineer-Certification-Guide/blob/main/Databricks%20Data%20Engineer%20Certification%20Associate/Code%20Snippet/Create%20Table%20Syntax.md)
+
+**Comparison of CREATE TABLE and CTAS**
+
+| Feature              | CREATE TABLE                                                                 | CTAS (CREATE TABLE AS SELECT)                                      |
+|----------------------|-------------------------------------------------------------------------------|--------------------------------------------------------------------|
+| **Syntax Example**   | `CREATE TABLE table_2 (col1 INT, col2 STRING, col3 DOUBLE)`                  | `CREATE TABLE table_2 AS SELECT col1, col2, col3 FROM table_1`     |
+| **Schema Declaration** | Requires **manual schema declaration** (explicitly define columns & types). | **Automatically infers schema** from the `SELECT` query.           |
+| **Populating Data**  | Creates an **empty table**; must load data separately (e.g., `INSERT INTO`). | Creates the table **with data populated** from the `SELECT` query. |
+| **Table Constraints** | Can add constraints after creation using `ALTER TABLE`. Supported: **NOT NULL**, **CHECK**. | Same as CREATE TABLE; constraints can be added post-creation.      |
+
+**Example constraint usage**:  
+```sql
+ALTER TABLE my_table
+ADD CONSTRAINT valid_date CHECK (date >= '2024-01-01' AND date <= '2024-12-31');
+```
+
+### Cloning Delta Lake Tables
+In Databricks, you can efficiently duplicate or back up your **Delta Lake tables** using **deep clone** or **shallow clone** operations.
+
+**1. Deep Cloning**
+
+Deep cloning copies **both data and metadata** from a source table to a target table. Example:
+```sql
+CREATE TABLE my_catalog.table_clone
+DEEP CLONE my_catalog.source_table;
+```
+- Deep cloning ensures a full independent copy, but may take longer for large tables because all data is physically copied.
+- Supports incremental synchronization, allowing updates from source to target if needed.
+
+**2. Shallow Cloning**
+
+Shallow cloning copies only the Delta transaction logs, not the underlying data:
+```sql
+CREATE TABLE my_catalog.table_clone
+SHALLOW CLONE my_catalog.source_table;
+```
+- This is faster and ideal for development or testing environments, where you want to experiment without duplicating large datasets.
+- Changes to the cloned table are tracked separately, preserving the integrity of the original table.
+
+>NOTE: **Data Integrity**
+>- Both cloning methods ensure that any modifications in the cloned table do not affect the original source table.
+>- Cloning works seamlessly with Unity Catalog schemas and supports all Delta Lake table types, including managed and external tables.
+
+### Exploring Views in Databricks
+
+**Definition:**  
+- A **view** is a **virtual table**; it stores a **SQL query** without storing physical data.  
+- Querying a view executes its underlying query against the source table(s) each time.
+
+#### View Types
+
+| View Type               | Syntax                     | Accessibility             | Lifetime                                   | Notes |
+|-------------------------|---------------------------|--------------------------|-------------------------------------------|-------|
+| **Stored View**          | `CREATE VIEW view_name AS <query>` | Across sessions & clusters | Dropped only via `DROP VIEW`             | Metadata stored in metastore; data queried from source table. |
+| **Temporary View**       | `CREATE TEMP VIEW view_name AS <query>` | Session-scoped           | Dropped automatically when session ends  | Useful for temporary analyses; not persisted in any database. |
+| **Global Temporary View**| `CREATE GLOBAL TEMP VIEW view_name AS <query>` | Cluster-scoped           | Dropped when cluster restarts/terminates | Accessible across notebooks on same cluster; stored in `global_temp` database. |
+
+#### Key Concepts
+
+- **Stored views** are persisted in the **metastore** (Hive or Unity Catalog) and accessible across sessions and clusters.  
+- **Temporary views** exist **only for the current session**; useful for ad-hoc computations.  
+- **Global temporary views** exist for the **lifetime of the cluster** and are accessible across multiple notebooks.  
+- **Query execution:** Views execute the underlying SQL query on source tables each time they are queried.  
+- **Dropping views:**
+```sql
+  DROP VIEW view_name;
+  DROP VIEW temp_view_name;
+  DROP VIEW global_temp.global_temp_view_name;
+```
+>NOTE: Databricks doesn't support materialized views, but you can achieve similar functionality using Delta tables, caching, or Delta Live Tables.
+>```sql
+>CACHE TABLE view_name;
+>```
