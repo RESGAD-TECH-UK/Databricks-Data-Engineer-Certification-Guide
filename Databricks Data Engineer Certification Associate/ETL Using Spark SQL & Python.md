@@ -21,6 +21,8 @@ SELECT * FROM json.`${dataset.mybigdata}/mydata-json/export_*.json`
 When dealing with a variety of text-based files, including formats such as JSON, CSV, TSV, and TXT, Databricks provides the flexibility to handle them using the text format:
 ```sql
 SELECT * FROM text.`path/file.txt`
+-- Or
+SELECT * FROM text.`path/file.csv...` --It can read JSON, CSV, or TSV
 ```
 This format allows you to extract the data as raw strings, which provide significant advantages, especially in scenarios where input data might be corrupted or contain anomalies. By extracting data as raw strings, you can leverage custom parsing logic to navigate and extract relevant values from the text-based files. E.g., 
 >Suppose you have a “students” CSV file like this:
@@ -59,3 +61,4 @@ WHERE value NOT LIKE 'id,%'  -- skip header
 `split(value, ',')` breaks the row into columns.
 `TRY_CAST(... AS INT)` avoids errors when age is not numeric (N/A becomes NULL).
 You can filter, clean, or reformat further as needed.
+
