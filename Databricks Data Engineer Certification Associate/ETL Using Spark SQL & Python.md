@@ -62,3 +62,19 @@ WHERE value NOT LIKE 'id,%'  -- skip header
 `TRY_CAST(... AS INT)` avoids errors when age is not numeric (N/A becomes NULL).
 You can filter, clean, or reformat further as needed.
 
+### Querying Using binaryFile Format
+There are scenarios where the binary representation of file content is essential, such as when working with images or unstructured data. In such cases, the binaryFile format is suited for this task:
+```sql
+SELECT * FROM binaryFile.`path/sample_image.png`
+```
+We can use the binaryFile format to extract the raw bytes and some metadata information of the student files:
+```sql
+SELECT * FROM binaryFile.`${dataset.school}/students-csv`
+```
+by using the binaryFile format, you can access both the content and metadata of files, offering a detailed view of your dataset.
+
+### Querying Non-Self-Describing Formats
+When dealing with non-self-describing formats like comma-separated-value (CSV), the SELECT statement may not be as informative. Unlike JSON and Parquet, CSV files lack a predefined schema, making the format less suitable for direct querying. In such cases, additional steps, such as defining a schema, may be necessary for effective data extraction and analysis. E.g., let say you are querying a csv that isn't delimited by a comma instead it was a semicolon. Using the statement below will return a single column and the header row will be extracted as a table row. 
+```sql
+SELECT * FROM csv.`${dataset.school}/courses-csv`
+```
