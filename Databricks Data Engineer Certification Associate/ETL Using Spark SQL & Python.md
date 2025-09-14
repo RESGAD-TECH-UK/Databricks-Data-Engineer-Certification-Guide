@@ -56,7 +56,7 @@ SELECT
   split(value, ',')[1] AS name,
   TRY_CAST(split(value, ',')[2] AS INT) AS age
 FROM text.`${dataset.school}/students-csv`
-WHERE value NOT LIKE 'id,%'  -- skip header
+WHERE value NOT LIKE 'id,%'  -- skip header (You can easily exclude this filter and manually remove the header afterwards)
 ```
 `split(value, ',')` breaks the row into columns.
 `TRY_CAST(... AS INT)` avoids errors when age is not numeric (N/A becomes NULL).
@@ -189,3 +189,4 @@ WHEN NOT MATCHED THEN INSERT *
 >WHEN NOT MATCHED THEN
 > INSERT *
 >```
+
