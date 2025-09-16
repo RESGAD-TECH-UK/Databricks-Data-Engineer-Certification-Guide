@@ -61,7 +61,7 @@ The Home directory is your default location within the workspace. It is personal
 This is the root folder that contains all users’ personal directories. From here, you can also access your Home directory by going to Users >user_name.
 
 **3. Repos**:
-This is the legacy service used for integrating your workspace with Git repositories. It has now been replaced by Git folders, which we cover in detail at the end of this chapter in “Creating Git Folders”.
+This is the legacy service used for integrating your workspace with Git repositories. It has now been replaced by Git folders.
 
 **4. Trash**
 This folder contains deleted items, which are retained for 30 days before being permanently removed.
@@ -91,9 +91,11 @@ While cluster pools offer significant **operational benefits**, they come with i
 This is done in the compute tab from the left siderbar in your databricks. 
 
 **Configuring the cluster: Single-node versus multi-node**
-We you configure your cluster to a **single-node cluster**, it will operate with just a driver node, eliminating the need for additional worker nodes. In this configuration, the driver handles both driver and worker responsibilities, executing all Spark jobs on a single machine. This setup is more cost effective as it consumes fewer resources. While **Multi-node cluster** is used when you want to handle larger datasets or more complex processing tasks, you can opt for a multi-node cluster, which includes one driver node and multiple worker nodes. This setup allows parallel processing, making it suitable for heavier workloads.
+
+You configure your cluster to a **single-node cluster**, it will operate with just a driver node, eliminating the need for additional worker nodes. In this configuration, the driver handles both driver and worker responsibilities, executing all Spark jobs on a single machine. This setup is more cost effective as it consumes fewer resources. While **Multi-node cluster** is used when you want to handle larger datasets or more complex processing tasks, you can opt for a multi-node cluster, which includes one driver node and multiple worker nodes. This setup allows parallel processing, making it suitable for heavier workloads.
 
 **Configuring the access mode**
+
 Databricks clusters offer different access modes depending on how the cluster is intended to be used: **Shared access mode**, this allows multiple users to share the cluster simultaneously but restricts workloads to SQL and Python only. Shared clusters are useful in collaborative environments where several users need to access the same cluster. **Single user mode**, this mode is appropriate if you are the only one using the cluster. It ensures that the cluster resources are dedicated solely to your tasks, potentially improving performance and efficiency.
 
 **Configuring Performance:**
