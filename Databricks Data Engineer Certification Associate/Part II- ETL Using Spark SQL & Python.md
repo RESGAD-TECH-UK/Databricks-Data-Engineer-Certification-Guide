@@ -110,3 +110,81 @@ SELECT id, name
 FROM nested_example
 GROUP BY id, name
 ```
+
+### Join Operations in Spark SQL
+The syntax used for joining data in Spark SQL follows the conventions of standard SQL. We specify the type of join we want (inner, outer, left, right, etc.), the tables we are joining, and the conditions for the join.
+```sql
+CREATE OR REPLACE VIEW dataset_enriched AS
+SELECT *
+FROM (
+  SELECT *, explode(column_1) AS column_name
+  FROM dataset_table ) e
+INNER JOIN dataset2_table c
+ON e.column_1.id = c.id;
+
+SELECT * FROM dataset_enriched
+```
+Other operations are; `UNION ALL, INTERSECT, and MINUS`, which is like SQL's EXCEPT operation.
+
+### Pivoting 
+Spark SQL supports creating pivot tables for transforming data perspectives using the PIVOT clause. This provides a means to generate aggregated values based on specific column values. This transformation results in a pivot table, wherein the aggregated values become multiple columns. 
+```sql
+SELECT * FROM (
+SELECT id, column_1.id AS course_id, column_1.subtotal AS subtotal
+  FROM dataset_enriched
+ )
+ PIVOT (
+ sum(subtotal) FOR id IN (
+   'C01', 'C02', 'C03', 'C04', 'C05', 'C06',
+   'C07', 'C08', 'C09', 'C10', 'C11', 'C12')
+)
+```
+>How PIVOT works in Spark SQL
+>- PIVOT takes one measure column (here: subtotal) and aggregates it (here: SUM).
+>- It takes one pivot column (here: id) and spreads its values across new columns.
+>- Everything else that’s selected but not aggregated or pivoted becomes the row identifier(s).
+
+| id | C01   | C02   | C03  | ... | C12  |
+| ----------- | ----- | ----- | ---- | --- | ---- |
+| 101         | 250.0 | 100.0 | NULL | ... | 75.0 |
+| 102         | NULL  | 200.0 | 50.0 | ... | NULL |
+
+### Higher-Order Functions
+Higher-order functions in Databricks provide a powerful toolset for working with complex data types, such as arrays. The two essential functions are: `FILTER and TRANSFORM`.
+**FILTER**
+
+The `FILTER` function is a fundamental higher-order function that enables the extraction of specific elements from an array based on a given lambda function.
+```SQL
+SELECT
+id,
+column_1,
+FILTER (column_1,
+       namexxx -> namexxx.discount_percent >= 60) AS highly_discounted_column_1
+FROM dataset_table
+```
+However, we will get result with several empty arrays where the discounted percentage is not upto 60. we could use the `WHERE` clause to filter them out.
+```sql
+SELECT id, highly_discounted_column_1
+FROM (
+ SELECT
+id,
+column_1,
+FILTER (column_1,
+       namexxx -> namexxx.discount_percent >= 60) AS highly_discounted_column_1   
+FROM dataset_table
+WHERE size(highly_discounted_column_1) > 0;
+```
+> NOTE: namexxx is not an actual column, just like in python for i in range(10), i = namexxx in this context.
+
+**TRANSFORM**
+
+The `TRANSFORM` function is another essential higher-order function that facilitates the application of a transformation to each item in an array, extracting the transformed values.
+```SQL
+SELECT
+id,
+column_1,
+TRANSFORM (
+  column_1,
+  namexxx -> ROUND(namexxx.subtotal * 1.2, 2) ) AS column_1_after_tax
+FROM dataset_table;
+```
