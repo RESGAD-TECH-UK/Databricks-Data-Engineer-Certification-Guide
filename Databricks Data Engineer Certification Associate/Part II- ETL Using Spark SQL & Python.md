@@ -188,3 +188,38 @@ TRANSFORM (
   namexxx -> ROUND(namexxx.subtotal * 1.2, 2) ) AS column_1_after_tax
 FROM dataset_table;
 ```
+### Developing SQL UDFs
+SQL user-defined functions (UDFs) are a powerful way to encapsulate custom logic with a SQL-like syntax, making it reusable across different SQL queries. Unlike external UDFs written in Scala, Java, Python, or R, which appear as black boxes to the Spark Optimizer, SQL UDFs leverage Spark SQL directly. This typically provides better performance when applying custom logic to large datasets.
+**Creating UDFs**
+
+To create a SQL UDF, you need to specify a function name, optional parameters, the return type, and the custom logic.
+```sql
+CREATE OR REPLACE FUNCTION get_letter_grade(column_name DOUBLE)
+RETURNS STRING
+RETURN CASE
+        WHEN column_name >= 3.5 THEN "A"
+        WHEN column_name >= 2.75 AND gpa < 3.5 THEN "B"
+        WHEN column_name >= 2 AND gpa < 2.75 THEN "C"
+        ELSE "F"
+     END
+```
+**Applying UDFs**
+
+Once the UDF is created, you can use it in any SQL query like a native function.
+```sql
+SELECT id, column_1, get_letter_grade(column_1) AS grade
+FROM Table_name
+```
+**Understanding UDFs**
+
+SQL UDFs are permanent objects stored in the database, allowing them to be used across different Spark sessions and notebooks.
+```sql
+DESCRIBE FUNCTION get_letter_grade
+DESCRIBE FUNCTION EXTENDED get_letter_grade -- to view more details about the function.
+```
+**Dropping UDFs**
+
+Finally, you can remove UDFs when they are no longer needed by using the DROP FUNCTION command:
+```sql
+DROP FUNCTION get_letter_grade;
+```
