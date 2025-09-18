@@ -6,6 +6,17 @@ To initiate a file query, we use the `SELECT * FROM` syntax, followed by the fil
 ```sql
 SELECT * FROM format.`path/file.format`
 ```
+### Simplified File Querying
+Databricks recently introduced a new function called read_files that makes it easier to query CSV files and other file formats directly, without needing to first create a temporary view.
+Example: Querying CSV Files
+```sql
+SELECT * FROM read_files(
+  '${dataset_bookstore}/books-csv/export_*.csv',
+  format => 'csv',
+  header => 'true',
+  delimiter => ';'
+);
+```
 
 ### Querying JSON Format
 To read a single JSON file, the SELECT statement is used with the syntax `SELECT * FROM json`.
@@ -72,6 +83,19 @@ We can use the binaryFile format to extract the raw bytes and some metadata info
 SELECT * FROM binaryFile.`${dataset.school}/students-csv`
 ```
 by using the binaryFile format, you can access both the content and metadata of files, offering a detailed view of your dataset.
+
+### The _metadata Column
+The input_file_name() function is no longer supported in newer versions of the Databricks Runtime. As an alternative, you can use the _metadata.file_path attribute to retrieve the file path information.
+```sql
+SELECT *,
+       _metadata.file_path AS source_file
+FROM json.`${dataset.bookstore}/customers-json`;
+```
+By leveraging the _metadata column, you can access various details about your input files, such as:
+- _metadata.file_path: The full path to the input file.
+- _metadata.file_name: The name of the file, including its extension.
+- _metadata.file_size: The size of the file in bytes.
+- _metadata.file_modification_time: The timestamp of the last modification made to the file.
 
 ### Querying Non-Self-Describing Formats
 When dealing with non-self-describing formats like comma-separated-value (CSV), the SELECT statement may not be as informative. Unlike JSON and Parquet, CSV files lack a predefined schema, making the format less suitable for direct querying. In such cases, additional steps, such as defining a schema, may be necessary for effective data extraction and analysis. E.g., let say you are querying a csv that isn't delimited by a comma instead it was a semicolon. Using the statement below will return a single column and the header row will be extracted as a table row. 
@@ -189,4 +213,5 @@ WHEN NOT MATCHED THEN INSERT *
 >WHEN NOT MATCHED THEN
 > INSERT *
 >```
+
 
